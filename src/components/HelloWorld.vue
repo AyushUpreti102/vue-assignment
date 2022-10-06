@@ -10,11 +10,28 @@
       <TestVue />
     </div>
     <button @click="hide">Hide Para</button>
-    <p class="hello__p" :class="(isRed)?'red':'hello__p'">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+    <p :class="isRed? 'red' : 'hello__para'">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
       Accusamus quod at,
       assumenda impedit
       consequatur eaque.</p>
     <input type="checkbox" v-model="isRed">Red
+    <p :class="(color==='black')?'hello__para':((color==='Red')?'red':((color==='Green')?'green':'blue'))">Select the
+      color from list below:
+    </p>
+    <legend>Select the color</legend>
+    <select name="color" id="color" v-model="color">
+      <option>Red</option>
+      <option>Green</option>
+      <option>Blue</option>
+    </select>
+    <legend>Selected the colors from the array:</legend>
+    <select name="colors" id="colors" v-model="color_value">
+      <option v-for="(col, index) in colors" :key="index" :value="{colr: col}">{{col}}</option>
+    </select>
+    <p
+      :class="(color_value.colr==='Black')?'hello__para':((color_value.colr==='Red')?'red':((color_value.colr==='Green')?'green':'blue'))">
+      {{color_value.colr}}
+    </p>
     </div>
 </template>
 
@@ -29,6 +46,11 @@ export default {
       message: "",
       seen: true,
       isRed: false,
+      color: 'black',
+      colors: ['Black', 'Red', 'Blue', 'Green'],
+      color_value: {
+        colr: ''
+      }
     };
   },
   methods: {
@@ -64,5 +86,16 @@ export default {
 <style scoped>
 .red {
   color: red;
+}
+.green {
+  color: green;
+}
+
+.blue {
+  color: blue;
+}
+
+.hello__para {
+  color: black;
 }
 </style>
