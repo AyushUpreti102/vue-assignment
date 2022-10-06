@@ -1,54 +1,68 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+    <p>{{name}}</p>
+    <p>{{message}}</p>
+    <form action="">
+      <input v-model="message">
+    </form><br />
+    <button @click="clear">Clear</button> <button @click="text">Capital</button>
+    <div class="hello__TestVue" v-if="seen">
+      <TestVue />
+    </div>
+    <button @click="hide">Hide Para</button>
+    <p class="hello__p" :class="(isRed)?'red':'hello__p'">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+      Accusamus quod at,
+      assumenda impedit
+      consequatur eaque.</p>
+    <input type="checkbox" v-model="isRed">Red
+    </div>
 </template>
 
 <script>
+import TestVue from './TestVue.vue';
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+  name: "HelloWorld",
+  TestVue,
+  data() {
+    return {
+      name: "Ayush",
+      message: "",
+      seen: true,
+      isRed: false,
+    };
+  },
+  methods: {
+    clear() {
+      if (this.message != "") {
+        this.message = "";
+      }
+    },
+    text() {
+      this.message = this.message.toUpperCase();
+    },
+    hide() {
+      if (this.seen) {
+        this.seen = false;
+      }
+      else {
+        this.seen = true;
+      }
+    },
+  },
+  created() {
+    console.warn("HelloWorld Created");
+  },
+  mounted() {
+    console.warn("HelloWorld Mounted");
+  },
+  updated() {
+    console.warn("HelloWorld Updated");
+  },
+  components: { TestVue }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.red {
+  color: red;
 }
 </style>
