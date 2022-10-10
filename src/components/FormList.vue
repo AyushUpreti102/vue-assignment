@@ -6,39 +6,54 @@
             Location<input type="text" v-model="details.Location">
             <button @click.prevent="addDetails">Add</button>
         </form><br />
-        <div class="FormList__FormData" v-for="(detail, index) in addedDetails" :key="index">
+        <div class="FormList__FormData" v-for="(detail, index) in addedDetails" :key="index"
+            :class="addedDetails[index].isChecked?'isRed':'isBlack'">
             <div class="FormList__Details Detail1">{{detail.FirstName}}</div>
             <div class="FormList__Details Detail2">{{detail.LastName}}</div>
             <div class="FormList__Details Detail3">{{detail.Location}}</div>
             <div class="FormList__Buttons">
                 <button @click.prevent="del(index)">X</button>
+                <input type="checkbox" @click="select(index)">
             </div>
         </div>
-    </div>
+        </div>
 </template>
 <script>
 export default {
     name: "FormList",
     data() {
         return {
-            message: "",
             details: {
                 FirstName: "",
                 LastName: "",
-                Location: ""
+                Location: "",
+                isChecked: false,
             },
             addedDetails: [],
-        };
+        }
     },
     methods: {
         addDetails() {
-            this.addedDetails.push(JSON.parse(JSON.stringify(this.details)));
-            this.details.FirstName = '';
-            this.details.LastName = '';
-            this.details.Location = '';
+            if (this.details.FirstName == "" || this.details.LastName == "" || this.details.Location == "") {
+                alert("please fill the form");
+            }
+            else {
+                this.addedDetails.push(JSON.parse(JSON.stringify(this.details)));
+            }
+            this.details.FirstName = "";
+            this.details.LastName = "";
+            this.details.Location = "";
         },
         del(index) {
             this.addedDetails.splice(index, 1);
+        },
+        select(index) {
+            if (this.addedDetails[index].isChecked === false) {
+                this.addedDetails[index].isChecked = true;
+            }
+            else {
+                this.addedDetails[index].isChecked = false;
+            }
         }
     },
 }
@@ -67,5 +82,13 @@ export default {
     display: flex;
     justify-content: center;
     gap: 5px;
+}
+
+.isRed {
+    color: red;
+}
+
+.isBlack {
+    color: black;
 }
 </style>
