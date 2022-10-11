@@ -1,28 +1,23 @@
 <template>
   <div class="hello">
-    <base-button @alert="alertParent" :btnName="buttonName" @reverse="reverseButtonName"/> <br/>
+    <BaseButton :Alert="alrt"/><br/>
+    <BaseButton1 :reverseName="reverse"/>
+    
   </div>
 </template>
 <script>
-import BaseButton from './base-button.vue';
+import BaseButton from './BaseButton.vue';
+import BaseButton1 from './BaseButton.vue';
+
 export default {
     name: "HelloWorld",
-    components: { BaseButton },
-    data(){
-      return{
-        message: 'hello',
-        buttonName: 'Primary',
-      }
+    data() {
+        return {
+          alrt: true,
+          reverse: true,
+        }
   },
-  methods: {
-    alertParent(val) {
-      alert(val);
-      this.message = 'message updated'
-    },
-    reverseButtonName() {
-      this.buttonName= this.buttonName.split('').reverse().join('');
-    }
-  }
+  components: { BaseButton, BaseButton1 }
 }
 </script>
 
