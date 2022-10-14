@@ -2,8 +2,8 @@
   <div id="app">
     <button @click="addTimer">Add Timer</button>
     <div class="app__Timer">
-      <div class="app__Counter" v-for="(element, index) in addedTimers" :key="index">
-        <TimeDisplayer :time="addedTimers[index].num" @number="increaseNum(index)"/>
+      <div class="app__Counter" v-for="(element, index) in addedTimers" :key="element.id">
+        <TimeDisplayer :time="addedTimers[index].num" @number="increaseNum(index)" @changeStart="changing(index)"/>
         <button @click="removeTimer(index)">Remove</button>
       </div>
     </div>
@@ -24,11 +24,16 @@ data(){
   }
 },
 methods: {
-  increaseNum(index){
-    this.addedTimers[index].num++;
+  changing(index){
+    this.addedTimers[index].start= true;
   },
-  addTimer(){
-    this.addedTimers.push({num : 0, id: this.id});
+  increaseNum(index){
+    if (this.addedTimers[index].start) {
+      this.addedTimers[index].num++;
+    }
+  },
+  addTimer() {
+    this.addedTimers.push({ num: 0, id: this.id, start: false });
     this.id++;
   },
   removeTimer(index){
@@ -41,7 +46,7 @@ methods: {
 <style scoped>
 #app {
   padding: 15px;
-    min-height: 600px;
+    min-height: 665px;
     background-color: darkgreen;
   }
   

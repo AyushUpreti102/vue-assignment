@@ -18,6 +18,7 @@ export default {
     },
     methods: {
         started(value) {
+            this.$emit('changeStart');
             if (value) {
                 this.counter = setInterval(() => {
                     this.$emit('number', this.count);
