@@ -22,7 +22,8 @@ export default {
 }
 </script>
 <style scoped>
-    .DisplayDetails{
+.DisplayDetails{
+        margin-top: 10px;
         background-color: rgb(248, 248, 119);
         padding: 20px 30px;
     }
