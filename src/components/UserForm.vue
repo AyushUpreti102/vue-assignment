@@ -2,7 +2,7 @@
     <div class="UserForm">
         <button class="AddForm__Button Button1" @click="showForm">Open Form</button>
     <div class="UserForm__AddedForm" :class="show?'display':'AddForm__Form'" @click.prevent="show=!show">
-        <form @submit.prevent="displayDetails" @click.stop>
+        <form @submit.prevent="submitDetails(indx)" @click.stop>
             <div class="UserForm__Head">
                 <span>{{msg}}</span>
                 <button class="AddForm__Button Button2" @click.prevent="hideForm">x</button>
@@ -25,8 +25,15 @@
             <button class="UserForm__Button Button" type="submit">Submit</button>
         </form>
     </div>
-    <div class="UserForm__Details" v-if="seen">
-        <DisplayDetails :userInfo="savedDetails" @editDetails="editDetails"/>
+    <div class="UserForm__Details" v-for="(val, index) in users" :key="index">
+        <DisplayDetails :userInfo="users[index]" @editDetails="editDetails(index)" />
+    </div>
+    <div class="UserForm__Pagination">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
     </div>
 </div>
 </template>
@@ -45,28 +52,35 @@ export default {
                 confirmPassword: "",
                 checkbox: false
             },
-            savedDetails: {
-                email: "",
-                name: "",
-                dob: "",
-                password: "",
-                checkbox: false
-            },
             seen: false,
             warning: '',
             show: false,
             msg: 'Add User',
+            users: [],
+            indx: 0
         };
     },
     methods: {
-        displayDetails() {
+        showForm() {
+            this.show = true;
+            this.userDetails.email = "";
+            this.userDetails.name = "";
+            this.userDetails.dob = "";
+            this.userDetails.password = "";
+            this.userDetails.confirmPassword = "";
+            this.userDetails.checkbox = false;
+            this.warning = ''
+            this.msg = 'Add User'
+        },
+        submitDetails(i) {
+            this.users.push({email: '', name: '', dob: '', password: '', checkbox: false});
             if (this.userDetails.password === this.userDetails.confirmPassword) {
                 this.seen = true;
-                this.savedDetails.email = this.userDetails.email;
-                this.savedDetails.name = this.userDetails.name;
-                this.savedDetails.dob = this.userDetails.dob;
-                this.savedDetails.password = this.userDetails.password;
-                this.savedDetails.checkbox = this.userDetails.checkbox;
+                this.users[i].email = this.userDetails.email;
+                this.users[i].name = this.userDetails.name;
+                this.users[i].dob = this.userDetails.dob;
+                this.users[i].password = this.userDetails.password;
+                this.users[i].checkbox = this.userDetails.checkbox;
                 this.userDetails.email = "";
                 this.userDetails.name = "";
                 this.userDetails.dob = "";
@@ -79,32 +93,20 @@ export default {
             else {
                 this.warning = 'password not matched'
             }
-            this.$emit('details', this.savedDetails);
-        },
-        showForm() {
-            this.show = true;
-            this.userDetails.email = "";
-            this.userDetails.name = "";
-            this.userDetails.dob = "";
-            this.userDetails.password = "";
-            this.userDetails.confirmPassword = "";
-            this.userDetails.checkbox = false;
-            this.warning = ''
-            this.msg = 'Add User'
+            this.indx++;
+            console.log(this.users);
         },
         hideForm() {
             this.show = false;
         },
-        editDetails(value) {
-            if (value) {
-                this.userDetails.email = this.savedDetails.email;
-                this.userDetails.name = this.savedDetails.name;
-                this.userDetails.dob = this.savedDetails.dob;
-                this.userDetails.password = this.savedDetails.password;
-                this.userDetails.checkbox = this.savedDetails.checkbox;
-                this.show = true;
-                this.msg = this.savedDetails.name;
-            }
+        editDetails(index) {
+            this.userDetails.email = this.users[index].email;
+            this.userDetails.name = this.users[index].name;
+            this.userDetails.dob = this.users[index].dob;
+            this.userDetails.password = this.users[index].password;
+            this.userDetails.checkbox = this.users[index].checkbox;
+            this.show = true;
+            this.msg = this.users[index].name;
         },
     },
 }
@@ -117,52 +119,63 @@ export default {
 }
 
 .Button1 {
-    background-color: rgb(180, 175, 175);
-    padding: 10px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-
-.Button2 {
-    width: 50px;
-    padding: 10px;
-    align-self: flex-end;
-}
-.UserForm__Warning{
-    color: red;
-    font-family: sans-serif;
-}
-.AddForm__Form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(0, 0, 0, 0.1);
-    position: fixed;
-    top: 0;
-    transform: translateY(-725px);
-}
-
-.display {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(0, 0, 0, 0.4);
-    position: fixed;
-    left: 0;
-    transition-property: all;
-    transition-duration: 1s;
-    transform: translateY(-54px);
-}
-
-.UserForm__AddedForm {
-    margin-top: 10px;
-    width: 100%;
+    width: 100px;
+        background-color: rgb(180, 175, 175);
+        padding: 10px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        align-self: flex-start;
+    }
+    
+    .Button2 {
+        width: 50px;
+        padding: 10px;
+        align-self: flex-end;
+    }
+    
+    .UserForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .UserForm__Warning {
+        color: red;
+        font-family: sans-serif;
+    }
+    
+    .AddForm__Form {
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        transform: translateY(-725px);
+    }
+    
+    .display {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(0, 0, 0, 0.4);
+        position: fixed;
+        left: 0;
+        transition-property: all;
+        transition-duration: 1s;
+        transform: translateY(-19px);
+    }
+    
+    .UserForm__AddedForm {
+        margin-top: 10px;
+        width: 100%;
     }
     
     .UserForm__Head {
@@ -173,29 +186,55 @@ export default {
     
     .UserForm form {
         position: fixed;
-        z-index: 1;
         width: 50%;
         background-color: rgb(154, 154, 225);
         border-radius: 20px;
-    color: white;
-    padding: 20px 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-.UserForm form div{
-    display: flex;
-    align-items: center;
-}
-.UserForm form input{
-    height: 30px;
-    outline: none;
-    font-size: 18px;
-    color: blue;
-}
-.UserForm__Button{
-    width: 20%;
-    padding: 10px;    
-}
+        color: white;
+        padding: 20px 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .UserForm form div {
+        display: flex;
+        align-items: center;
+    }
+    
+    .UserForm form input {
+        height: 30px;
+        outline: none;
+        font-size: 18px;
+        color: blue;
+    }
+    
+    .UserForm__Button {
+        width: 20%;
+        padding: 10px;
+    }
+    
+    .UserForm__Pagination {
+        margin-top: 10px;
+        border: 1px solid red;
+        width: 50%;
+        position: relative;
+        bottom: 0px;
+    }
+    
+    .UserForm__Pagination ul {
+        border: 1px solid black;
+        height: 40px;
+        width: 100%;
+        list-style: none;
+        display: flex;
+    }
+    
+    .UserForm__Pagination ul li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 33.33%;
+        border: 1px solid green;
+    }
 </style>
