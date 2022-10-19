@@ -28,13 +28,6 @@
     <div class="UserForm__Details" v-for="(val, index) in users" :key="index">
         <DisplayDetails :userInfo="users[index]" @editDetails="editDetails(index)" />
     </div>
-    <div class="UserForm__Pagination">
-        <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-        </ul>
-    </div>
 </div>
 </template>
 <script>
@@ -73,7 +66,7 @@ export default {
             this.msg = 'Add User'
         },
         submitDetails(i) {
-            this.users.push({email: '', name: '', dob: '', password: '', checkbox: false});
+            this.users.push({ email: '', name: '', dob: '', password: '', checkbox: false });
             if (this.userDetails.password === this.userDetails.confirmPassword) {
                 this.seen = true;
                 this.users[i].email = this.userDetails.email;
@@ -209,32 +202,8 @@ export default {
         color: blue;
     }
     
-    .UserForm__Button {
-        width: 20%;
-        padding: 10px;
-    }
-    
-    .UserForm__Pagination {
-        margin-top: 10px;
-        border: 1px solid red;
-        width: 50%;
-        position: relative;
-        bottom: 0px;
-    }
-    
-    .UserForm__Pagination ul {
-        border: 1px solid black;
-        height: 40px;
-        width: 100%;
-        list-style: none;
-        display: flex;
-    }
-    
-    .UserForm__Pagination ul li {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 33.33%;
-        border: 1px solid green;
-    }
+        .Button {
+            width: 20%;
+            padding: 10px;
+        }
 </style>
