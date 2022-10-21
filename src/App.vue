@@ -1,21 +1,21 @@
 <template>
   <v-app>
     <v-main>
-      <TodoApp/>
-      <TodoList/>
+      <NavBar />
+      <AnimalsCards/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import TodoApp from './components/TodoApp.vue';
-import TodoList from './components/TodoList.vue';
+import NavBar from "./components/NavBar.vue";
+import AnimalsCards from "./components/AnimalsCards.vue";
 
 export default {
     name: 'App',
   components: {
-    TodoApp,
-    TodoList
-  },
+    NavBar,
+    AnimalsCards
+},
 };
 </script>

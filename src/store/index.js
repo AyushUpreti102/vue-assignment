@@ -5,19 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    tasks: [],
+    cards: []
   },
   getters: {
-    newTask: state=>{
-      return state.tasks;
+    getCards: state=>{
+      return state.cards;
     }
   },
   mutations: {
-    addTask: (state, payload)=>{
-      return state.tasks.push({msg: payload});
-    },
-    deleteTask: (state, payload)=>{
-      return state.tasks.splice(payload, 1);
-    }
+    
   },
 })
