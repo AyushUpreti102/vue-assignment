@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    cards: []
+    cards: [],
+    selectedImg: null
   },
   getters: {
     getCards: state=>{
@@ -13,6 +14,20 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    
+    addCard: (state, payload)=>{
+      state.cards.push({name: payload, imagePreviewURL: state.selectedImg})
+    },
+    deleteCard: (state, payload)=>{
+      state.cards.splice(payload, 1);
+    },
+    previewImage: (state, payload)=>{
+      const file = payload;
+      if (file) {
+        state.selectedImg = URL.createObjectURL(file);
+        URL.revokeObjectURL(file);
+      } else {
+        state.selectedImg = null;
+      }
+    }
   },
 })
