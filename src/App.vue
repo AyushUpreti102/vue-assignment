@@ -16,6 +16,6 @@ export default {
   components: {
     NavBar,
     AnimalsCards,
-},
+  },
 };
 </script>
