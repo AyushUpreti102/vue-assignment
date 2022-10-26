@@ -63,7 +63,7 @@ export default {
         this.$refs.submitForm.reset()
       },
       previewImage(event) {
-          this.$store.commit('previewImage', event)
+        this.$store.dispatch('previewImage', event)
         },
     }
 }

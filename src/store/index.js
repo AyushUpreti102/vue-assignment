@@ -36,6 +36,9 @@ export default new Vuex.Store({
     },
     deleteCard(context, payload){
       context.commit('deleteCard', payload);
+    },
+    previewImage(context, payload){
+      context.commit('previewImage', payload);
     }
   }
 })
