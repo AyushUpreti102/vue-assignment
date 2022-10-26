@@ -30,4 +30,12 @@ export default new Vuex.Store({
       }
     }
   },
+  actions:{
+    addCard(context, payload){
+      context.commit('addCard', payload);
+    },
+    deleteCard(context, payload){
+      context.commit('deleteCard', payload);
+    }
+  }
 })

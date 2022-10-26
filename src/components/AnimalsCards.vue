@@ -21,7 +21,7 @@ export default {
     },
     methods: {
         deleteCard(i){
-            this.$store.commit('deleteCard', i);
+            this.$store.dispatch('deleteCard', i);
         }
     }
 }

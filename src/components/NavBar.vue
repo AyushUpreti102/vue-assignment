@@ -56,12 +56,13 @@ export default {
     },
     methods: {
         addCard(){
-          this.$store.commit('addCard', this.animalName);
-          this.dialog = false;
-          this.animalName= '';
-          this.$refs.submitForm.reset()
-        },
-        previewImage(event) {
+        // this.$store.commit('addCard', this.animalName);
+        this.$store.dispatch('addCard', this.animalName)
+        this.dialog = false;
+        this.animalName = '';
+        this.$refs.submitForm.reset()
+      },
+      previewImage(event) {
           this.$store.commit('previewImage', event)
         },
     }
